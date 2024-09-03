@@ -12,9 +12,9 @@ import { ContactComponent } from './pages/contact/contact.component';
 @NgModule({
   declarations: [
     AboutPageComponent,
+    ContactComponent,
     HomePageComponent,
-    SidebarComponent,
-    ContactComponent
+    SidebarComponent
   ],
   imports: [
     CommonModule,
@@ -22,6 +22,7 @@ import { ContactComponent } from './pages/contact/contact.component';
   ],
   exports:[
     AboutPageComponent,
+    ContactComponent,
     HomePageComponent,
     SidebarComponent
   ]
