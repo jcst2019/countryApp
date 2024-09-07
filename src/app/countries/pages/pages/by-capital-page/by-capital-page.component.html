@@ -5,8 +5,9 @@
         <!-- SearchBox -->
          <!-- Busquedas -->
          <!-- (onValueJCST)="searchByCapital($event)"  -->
+         <!-- (onValueJCST)="searchByCapital($event)" -->
         <shared-search-box 
-        (onValueJCST)="searchByCapital($event)"
+        (onDebounce)="searchByCapital($event)"
         placeHolder="Buscar por Capital"></shared-search-box>
     </div>
 </div>

@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { Subject } from 'rxjs';
+import { debounceTime, Subject } from 'rxjs';
 
 @Component({
   selector: 'shared-search-box',
@@ -17,12 +17,19 @@ export class SearchBoxComponent implements OnInit {
   @Output()
   // public onValue: EventEmitter<string> =new EventEmitter<string>();
   public onValueJCST = new EventEmitter<string>();
+
+  @Output()
+
+  public onDebounce = new EventEmitter<string>();
   
   ngOnInit(): void {
     this.debouncer
+    .pipe(
+      debounceTime(1000) //1000 =< 1 segundo// Pero se recomienda 300 o 3 miesimas de segundo
+    )
     .subscribe(value=>{
       console.log('debouncer value',value);
-      
+      this.onDebounce.emit(value);
     });
   }
 
