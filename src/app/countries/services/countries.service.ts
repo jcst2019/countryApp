@@ -24,7 +24,7 @@ export class CountriesService {
     return this.http.get<Country[]>(url)
     .pipe(
       catchError( error => of([])),
-      //  delay(1000)// Para probar el loading SOLO coloco de forma temporal para que demore 1 segundos en pintar el resultado en pantalla.
+        // delay(2000)// Para probar el loading SOLO coloco de forma temporal para que demore 2 segundos en pintar el resultado en pantalla.
     );
   }
 
