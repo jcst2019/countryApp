@@ -10,6 +10,7 @@ import { Component } from '@angular/core';
 export class ByCapitalPageComponent {
 
   public countries : Country[]=[];
+  public isLoading: boolean=false;
 
   constructor(private countriesService:CountriesService){
 
@@ -17,11 +18,13 @@ export class ByCapitalPageComponent {
 
   searchByCapital(term:string):void{
 
+    this.isLoading=true;
     console.log('Desde By Capital Page');
     console.log({term});
     this.countriesService.searchCapital(term).subscribe(
       countries =>{
           this.countries = countries;
+          this.isLoading=false;
       }
     );
 

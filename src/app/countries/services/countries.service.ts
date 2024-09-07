@@ -10,7 +10,7 @@
 
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { catchError, map, Observable, of, tap } from 'rxjs';
+import { catchError, delay, map, Observable, of, tap } from 'rxjs';
 import { Country } from '../interfaces/country';
 
 @Injectable({providedIn: 'root'})
@@ -23,7 +23,8 @@ export class CountriesService {
   private getHttpCountriesRequest(url:string):Observable<Country[]>{
     return this.http.get<Country[]>(url)
     .pipe(
-      catchError( error => of([]))
+      catchError( error => of([])),
+      delay(2000)// Para probar el loading SOLO coloco de forma temporal para que demore 2 segundos en pintar el resultado en pantalla.
     );
   }
 
