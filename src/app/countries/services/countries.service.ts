@@ -21,13 +21,14 @@ export class CountriesService {
   constructor(private http: HttpClient) { }
 
 
-  searchCountryByAlphaCode(code:string):Observable<Country[]>{
+  searchCountryByAlphaCode(code:string):Observable<Country | null>{
 
-    const url = `${this.apiUrl}/alpha/${code}`
+    const url = `${this.apiUrl}/alpha/${code}`;
 
     return this.http.get<Country[]>(url)
     .pipe(
-      catchError( error => of([]))
+      map(countries => countries.length > 0 ? countries[0] : null ),
+      catchError(error => of(null)) // Devuelve null en lugar de un array vacío
     );
 
 
