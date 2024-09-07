@@ -20,6 +20,12 @@ export class CountriesService {
 
   constructor(private http: HttpClient) { }
 
+  private getHttpCountriesRequest(url:string):Observable<Country[]>{
+    return this.http.get<Country[]>(url)
+    .pipe(
+      catchError( error => of([]))
+    );
+  }
 
   searchCountryByAlphaCode(code:string):Observable<Country | null>{
 
@@ -37,12 +43,14 @@ export class CountriesService {
 searchCapital(term: string):Observable<Country[]>{
 
   const url = `${this.apiUrl}/capital/${term}`
+  return this.getHttpCountriesRequest(url);
 
   // return this.http.get<Country[]>(url);
-  return this.http.get<Country[]>(url)
-  .pipe(
-    catchError( error => of([]))
-  );
+  // return this.http.get<Country[]>(url)
+  // .pipe(
+  //   catchError( error => of([]))
+  // );
+
   // .pipe(
   //   tap( countries => console.log('Paso por el tap',countries)),
   //   map(countries => []),
@@ -55,10 +63,12 @@ searchCountry(term: string):Observable<Country[]>{
 
   const url = `${this.apiUrl}/name/${term}`
 
-  return this.http.get<Country[]>(url)
-  .pipe(
-    catchError( error => of([]))
-  );
+  return this.getHttpCountriesRequest(url);
+
+  // return this.http.get<Country[]>(url)
+  // .pipe(
+  //   catchError( error => of([]))
+  // );
  
 }
 
@@ -66,10 +76,12 @@ searchRegion(region: string):Observable<Country[]>{
 
   const url = `${this.apiUrl}/region/${region}`
 
-  return this.http.get<Country[]>(url)
-  .pipe(
-    catchError( error => of([]))
-  );
+  return this.getHttpCountriesRequest(url);
+
+  // return this.http.get<Country[]>(url)
+  // .pipe(
+  //   catchError( error => of([]))
+  // );
  
 }
 
