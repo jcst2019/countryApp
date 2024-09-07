@@ -63,13 +63,9 @@ export class CountryPageComponent implements OnInit{
     )
     .subscribe(country =>{
         console.log(country);
-        if(!country){
-          return this.router.navigateByUrl('');
-        }
-        console.log('Tenemos un pais');
-        this.country= country;
-        return;
-        
+        if(!country)  return this.router.navigateByUrl('');
+        return this.country= country;
+        // return;
       }
     );
   }
