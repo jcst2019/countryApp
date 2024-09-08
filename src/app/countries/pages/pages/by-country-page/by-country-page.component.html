@@ -6,7 +6,7 @@
          <!-- Busquedas -->
          <!-- (onValueJCST)="searchByCapital($event)"  -->
         <shared-search-box 
-        (onValueJCST)="searchByCountry($event)"
+        (onDebounce)="searchByCountry($event)"
         placeHolder="Buscar por País"></shared-search-box>
     </div>
 </div>
