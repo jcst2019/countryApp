@@ -26,7 +26,9 @@ export class CountriesService {
     byRegion:   { region:'', countries:[] },
   }
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) { 
+    this.loadFromLocalStorage();
+  }
 
   private getHttpCountriesRequest(url:string):Observable<Country[]>{
     return this.http.get<Country[]>(url)
@@ -55,7 +57,8 @@ searchCapital(term: string):Observable<Country[]>{
   return this.getHttpCountriesRequest(url)
   .pipe(
     // tap(countries => this.cacheStore.byCapital ={term:term,countries:countries})
-    tap(countries => this.cacheStore.byCapital ={term,countries}) // En EMS6 un valor de un objeto que apunta al valor de una variable que tiene el mismo nomnbre entonces se reduce a =>
+    tap(countries => this.cacheStore.byCapital ={term,countries}), // En EMS6 un valor de un objeto que apunta al valor de una variable que tiene el mismo nomnbre entonces se reduce a =>
+    tap(() => this.saveToLocalStorage())
   );
 
   // return this.http.get<Country[]>(url);
@@ -79,7 +82,8 @@ searchCountry(term: string):Observable<Country[]>{
   return this.getHttpCountriesRequest(url)
   .pipe(
     // tap(countries => this.cacheStore.byCapital ={term:term,countries:countries})
-    tap(countries => this.cacheStore.byCountries ={term,countries}) // En EMS6 un valor de un objeto que apunta al valor de una variable que tiene el mismo nomnbre entonces se reduce a =>
+    tap(countries => this.cacheStore.byCountries ={term,countries}), // En EMS6 un valor de un objeto que apunta al valor de una variable que tiene el mismo nomnbre entonces se reduce a =>
+    tap(() => this.saveToLocalStorage())
   );
 
   // return this.http.get<Country[]>(url)
@@ -89,6 +93,18 @@ searchCountry(term: string):Observable<Country[]>{
  
 }
 
+private saveToLocalStorage(){
+
+  localStorage.setItem('cacheStore',JSON.stringify(this.cacheStore));
+
+}
+
+private loadFromLocalStorage(){
+  if(!localStorage.getItem('cacheStore')) return;
+
+  this.cacheStore = JSON.parse(localStorage.getItem('cacheStore')!)
+}
+
 searchRegion(region: Region):Observable<Country[]>{
 
   const url = `${this.apiUrl}/region/${region}`
@@ -96,7 +112,8 @@ searchRegion(region: Region):Observable<Country[]>{
   return this.getHttpCountriesRequest(url)
   .pipe(
     // tap(countries => this.cacheStore.byCapital ={term:term,countries:countries})
-    tap(countries => this.cacheStore.byRegion ={region,countries}) // En EMS6 un valor de un objeto que apunta al valor de una variable que tiene el mismo nomnbre entonces se reduce a =>
+    tap(countries => this.cacheStore.byRegion ={region,countries}), // En EMS6 un valor de un objeto que apunta al valor de una variable que tiene el mismo nomnbre entonces se reduce a =>
+    tap(() => this.saveToLocalStorage())
   );
   // return this.http.get<Country[]>(url)
   // .pipe(
