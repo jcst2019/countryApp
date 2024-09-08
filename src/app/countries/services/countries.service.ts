@@ -13,6 +13,7 @@ import { HttpClient } from '@angular/common/http';
 import { catchError, delay, map, Observable, of, tap } from 'rxjs';
 import { Country } from '../interfaces/country';
 import { CacheStorage } from '../interfaces/cache-store.interface';
+import { Region } from '../interfaces/region.type';
 
 @Injectable({providedIn: 'root'})
 export class CountriesService {
@@ -88,12 +89,15 @@ searchCountry(term: string):Observable<Country[]>{
  
 }
 
-searchRegion(region: string):Observable<Country[]>{
+searchRegion(region: Region):Observable<Country[]>{
 
   const url = `${this.apiUrl}/region/${region}`
 
-  return this.getHttpCountriesRequest(url);
-
+  return this.getHttpCountriesRequest(url)
+  .pipe(
+    // tap(countries => this.cacheStore.byCapital ={term:term,countries:countries})
+    tap(countries => this.cacheStore.byRegion ={region,countries}) // En EMS6 un valor de un objeto que apunta al valor de una variable que tiene el mismo nomnbre entonces se reduce a =>
+  );
   // return this.http.get<Country[]>(url)
   // .pipe(
   //   catchError( error => of([]))
